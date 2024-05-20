@@ -21,7 +21,7 @@ kubectl apply -f k8s-tasks-practice/jekyll/k8s-manifest/-node-service.yaml
 #use developer context
 kubectl config use-context developer
 
-or
+OR
 
 #apply all manifest file at once
 kubectl apply -f k8s-tasks-practice/jekyll/k8s-manifest/
