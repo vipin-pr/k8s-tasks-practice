@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"PersistentVolume","metadata":{"annotations":{},"name":"jekyll-site"},"spec":{"accessModes":["ReadWriteMany"],"capacity":{"storage":"1Gi"},"local":{"path":"/site"},"nodeAffinity":{"required":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/hostname","operator":"In","values":["node01"]}]}]}},"persistentVolumeReclaimPolicy":"Delete","storageClassName":"local-storage","volumeMode":"Filesystem"}}
+  creationTimestamp: "2024-05-20T12:10:44Z"
+  finalizers:
+  - kubernetes.io/pv-protection
+  name: jekyll-site
+  resourceVersion: "8546"
+  uid: c148ceab-1162-4458-bcf5-27893ceb60de
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 1Gi
+  local:
+    path: /site
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - node01
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  volumeMode: Filesystem
+status:
+  phase: Available
+---
+Name: jekyll-site
+Labels: <none>
+Annotations: <none>
+Finalizers: [kubernetes.io/pv-protection]
+StorageClass: local-storage
+Status: Available
+Claim:
+Reclaim Policy: Delete
+Access Modes: RWX
+VolumeMode: Filesystem
+Capacity: 1Gi
+Node Affinity:
+  Required Terms:
+    Term 0: kubernetes.io/hostname in [node01]
+Message:
+Source:
+  Type: LocalVolume (a persistent volume backed by local storage on a node)
+  Path: /site
+Events: <none>
