@@ -4,7 +4,7 @@ metadata:
   namespace: development
   name: jekyll
   labels:
-    name: jekyll
+    run: jekyll
 spec:
   initContainers:
   - name: copy-jekyll-site
