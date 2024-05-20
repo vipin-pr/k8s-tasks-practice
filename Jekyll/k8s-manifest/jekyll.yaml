@@ -27,7 +27,7 @@ spec:
     ports:
     - containerPort: 4000
 
-    volumes:
-    - name: site
-      persistentVolumeClaim:
-        claimName: jekyll-site
+  volumes:
+  - name: site
+    persistentVolumeClaim:
+      claimName: jekyll-site
