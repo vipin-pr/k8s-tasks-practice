@@ -1,16 +1,27 @@
 #commands for configuring kubernetes resources
 
 #Build user information for martin in the default kubeconfig file: User = martin , client-key = /root/martin.key and client-certificate = /root/martin.crt (Ensure don't embed within the kubeconfig file)
-kubectl config set-credentials martin --client-certificate=/root/martin.crt --client-key=/root/martin.key --kubeconfig=.kube/config.yaml
+kubectl config set-credentials martin --client-certificate=/root/martin.crt --client-key=/root/martin.key
+
 
 #Create a new context called 'developer' in the default kubeconfig file with 'user = martin' and 'cluster = kubernetes'
-kubectl config set-context developer --cluster=kubernetes --user=martin --namespace=development #--current
+kubectl config set-context developer --cluster=kubernetes --user=martin
 
-#developer-role
-kubectl apply -f k8s-tasks-practice/Jekyll SSG/developer-role.yaml
+#developer-role & developer-rolebinding
+kubectl apply -f k8s-tasks-practice/jekyll/k8s-manifest/-role.yaml
 
-#developer-rolebinding
-kubectl apply -f k8s-tasks-practice/Jekyll SSG/developer-rolebinding.yaml
+kubectl apply -f k8s-tasks-practice/jekyll/k8s-manifest/developer-rolebinding.yaml
 
 #set context 'developer' with user = 'martin' and cluster = 'kubernetes' as the current context.
 kubectl config set-context developer --user=martin --current
+
+#Jekyll-node-service
+kubectl apply -f k8s-tasks-practice/jekyll/k8s-manifest/-node-service.yaml
+
+#use developer context
+kubectl config use-context developer
+
+or
+
+#apply all manifest file at once
+kubectl apply -f k8s-tasks-practice/jekyll/k8s-manifest/
