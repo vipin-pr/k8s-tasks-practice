@@ -30,7 +30,7 @@ set context 'developer' with user = 'martin' and cluster = 'kubernetes' as the c
 
 ----------------------------------------------------------------------------------------
 
-jekyll-ndoe-service
+jekyll-node-service
 
 Service 'jekyll' uses targetPort: '4000', namespace: 'development'
 
