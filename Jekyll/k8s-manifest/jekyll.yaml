@@ -21,9 +21,6 @@ spec:
     - mountPath: /site
       name: site
     resources:
-      limits:
-        memory: "128Mi"
-        cpu: "500m"
     ports:
     - containerPort: 4000
 
