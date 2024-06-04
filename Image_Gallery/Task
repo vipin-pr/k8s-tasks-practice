@@ -1,0 +1,66 @@
+This 2-Node Kubernetes cluster is broken! Troubleshoot, fix the cluster issues and then deploy the objects according to the given architecture diagram to unlock our Image Gallery!!
+
+#Service
+New Service, name: 'gop-fs-service'
+
+Service name: gop-fs-service, port: '8080'
+
+Service name: gop-fs-service, targetPort: '8080'
+
+#pod
+Create a pod for file server, name: 'gop-file-server'
+
+pod: gop-file-server image: 'kodekloud/fileserver'
+
+pod: gop-file-server mountPath: '/web'
+
+pod: gop-file-server volumeMount name: 'data-store'
+
+pod: gop-file-server persistent volume name: data-store
+
+pod: gop-file-server persistent volume claim used: 'data-pvc'
+
+#pvc
+Create new PersistentVolumeClaim = 'data-pvc'
+
+PersistentVolume = 'data-pvc', accessModes = 'ReadWriteMany'
+
+PersistentVolume = 'data-pvc', storage request = '1Gi'
+
+PersistentVolume = 'data-pvc', volumeName = 'data-pv'
+
+#pv
+Create new PersistentVolume = 'data-pv'
+
+PersistentVolume = data-pv, accessModes = 'ReadWriteMany'
+
+PersistentVolume = data-pv, hostPath = '/web'
+
+PersistentVolume = data-pv, storage = '1Gi'
+
+#copy files
+Copy all images from the directory '/media' on the controlplane node to '/web' directory on node01
+scp /media/* node01:/web
+
+#troubleshoot kubernetes cluster
+node01 is ready and can schedule pods?
+SchedulingDisabled for node01
+use the command "kubectl uncordon node01" to make the node schedulable
+
+Master node: coredns deployment has image: 'registry.k8s.io/coredns/coredns:v1.8.6'
+
+Fix kube-apiserver. Make sure its running and healthy.
+
+kubeconfig = /root/.kube/config, User = 'kubernetes-admin' Cluster: Server Port = '6443'
+
+E0602 00:57:54.498001   10507 memcache.go:265] couldn't get current server API group list: Get "https://controlplane:6433/api?timeout=32s": dial tcp 192.5.158.9:6433: connect: connection refused
+E0602 00:57:54.498385   10507 memcache.go:265] couldn't get current server API group list: Get "https://controlplane:6433/api?timeout=32s": dial tcp 192.5.158.9:6433: connect: connection refused
+E0602 00:57:54.499697   10507 memcache.go:265] couldn't get current server API group list: Get "https://controlplane:6433/api?timeout=32s": dial tcp 192.5.158.9:6433: connect: connection refused
+E0602 00:57:54.501010   10507 memcache.go:265] couldn't get current server API group list: Get "https://controlplane:6433/api?timeout=32s": dial tcp 192.5.158.9:6433: connect: connection refused
+E0602 00:57:54.502387   10507 memcache.go:265] couldn't get current server API group list: Get "https://controlplane:6433/api?timeout=32s": dial tcp 192.5.158.9:6433: connect: connection refused
+The connection to the server controlplane:6433 was refused - did you specify the right host or port?
+
+Solution:
+
+1) incorrect port number specified in kubeconfig file .kube/config -> change the port number to 6443
+2) incorrect ca-certificate is specified in kube-apiserver manifest file located at /etc/kuberentes/manifests/kube-apiserver.yaml - "--client-ca-file=/etc/kubernetes/pki/ca-certificate.crt" -> change it to '--client-ca-file=/etc/kubernetes/pki/ca.crt'
