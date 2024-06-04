@@ -5,6 +5,10 @@ metadata:
   labels:
     name: gop-file-server
 spec:
+  volumes:
+  - name: data-store
+    persistentVolumeClaim:
+      claimName: data-pvc
   containers:
   - name: gop-file-server
     image: kodekloud/fileserver
@@ -17,7 +21,3 @@ spec:
     volumeMounts:
     - mountPath: "/web"
       name: data-store
-volumes:
-- name: data-pv
-  persistentVolumeClaim:
-    claimName: data-pvc

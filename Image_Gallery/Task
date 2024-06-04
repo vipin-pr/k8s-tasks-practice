@@ -48,6 +48,9 @@ SchedulingDisabled for node01
 use the command "kubectl uncordon node01" to make the node schedulable
 
 Master node: coredns deployment has image: 'registry.k8s.io/coredns/coredns:v1.8.6'
+k get deployments.apps -n kube-system 
+k edit deployments.apps coredns -n kube-system
+change the image name to registry.k8s.io/coredns/coredns:v1.8.6
 
 Fix kube-apiserver. Make sure its running and healthy.
 
