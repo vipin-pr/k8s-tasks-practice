@@ -1,0 +1,8 @@
+#Copy all images from the directory '/media' on the controlplane node to '/web' directory on node01
+scp /media/* node01:/web
+
+#clone the repository
+git clone https://github.com/vipin-pr/k8s-tasks-practice.git
+
+#apply the manifests files
+kubectl apply -f k8s-tasks-practice/Image_Gallery/
