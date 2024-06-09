@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vote-deployment
+spec:
+  selector:
+    matchLabels:
+      app: vote-deployment
+  template:
+    metadata:
+      labels:
+        app: vote-deployment
+    spec:
+      containers:
+      - name: vote-deployment
+        image: kodekloud/examplevotingapp_vote:before
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
