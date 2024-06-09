@@ -1,6 +1,60 @@
 vote-service
-port = '5000'
-targetPort = '80'
-nodePort= '31000'
+port : '5000'
+targetPort : '80'
+nodePort: '31000'
 service endpoint exposes deployment 'vote-deployment'
-selector_label= 
+selector_label: vote-deployment
+
+vote-deployment
+name : 'vote-deployment'
+image : 'kodekloud/examplevotingapp_vote:before'
+label : vote-deployment
+container port: 80
+
+redis-service
+name : 'redis'
+port: '6379'
+targetPort: '6379'
+type: 'ClusterIP'
+selector_label: redis-deployment
+service endpoint exposes deployment 'redis-deployment'
+
+redis-deployment
+name: 'redis-deployment'
+image: 'redis:alpine'
+Volume Type: 'EmptyDir'
+Volume Name: 'redis-data'
+mountPath: '/data'
+label: redis-deployment
+
+worker - #deployment
+name: 'worker'
+image: 'kodekloud/examplevotingapp_worker'
+label: worker
+
+db
+service: 'db'
+port: '5432'
+targetPort: '5432'
+type: 'ClusterIP'
+selector_label: db-deployment
+
+db-deployment
+name: 'db-deployment'
+image: 'postgres:9.4' 
+add the env: 'POSTGRES_HOST_AUTH_METHOD=trust'
+Volume Type: 'EmptyDir'
+Volume Name: 'db-data'
+mountPath: '/var/lib/postgresql/data'
+label: db-deployment
+
+result-deployment
+name: 'result-deployment'
+image: 'kodekloud/examplevotingapp_result:before'
+label: result-deployment
+
+result-service
+port: '5001'
+targetPort: '80'
+NodePort: '31001'
+selector_label: result-deployment
