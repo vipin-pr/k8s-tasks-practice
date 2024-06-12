@@ -32,6 +32,13 @@ name: 'worker'
 image: 'kodekloud/examplevotingapp_worker'
 label: worker
 
+worker-service
+name: worker-service
+port: 8000
+targetPort: 8000
+type: ClusterIP
+selector_label: worker
+
 db
 service: 'db'
 port: '5432'
