@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+spec:
+  selector:
+    matchLabels:
+      app: db-deployment
+  template:
+    metadata:
+      labels:
+        app: db-deployment
+    spec:
+      containers:
+      - name: db-deployment
+        image: postgres:9.4
+        env:
+        - name: POSTGRES_HOST_AUTH_METHOD
+          value: "trust"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - mountPath: /data
+          name: db-data
+      volumes:
+      - name: db-data
+        emptyDir:
+          sizeLimit: 1Gi
