@@ -1,1 +1,15 @@
 Build a highly available Redis Cluster based on the given architecture diagram.
+
+redis-cluster-config
+Command:
+kubectl exec -it redis-cluster-0 -- redis-cli --cluster create --cluster-replicas 1 $(kubectl get pods -l app=redis-cluster -o jsonpath='{range.items[*]}{.status.podIP}:6379 {end}')
+
+
+redis-cluster-service
+Ports - service name 'redis-cluster-service', port name: 'client', port: '6379'
+
+Ports - service name 'redis-cluster-service', port name: 'gossip', port: '16379'
+
+Ports - service name 'redis-cluster-service', port name: 'client', targetPort: '6379'
+
+Ports - service name 'redis-cluster-service', port name: 'gossip', targetPort: '16379'
