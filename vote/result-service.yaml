@@ -4,6 +4,7 @@ metadata:
   namespace: vote
   name: result-service
 spec:
+  type: NodePort
   selector:
     app: result-deployment
   ports:
