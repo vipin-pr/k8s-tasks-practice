@@ -4,7 +4,7 @@ metadata:
   name: redis-cluster-service
 spec:
   selector:
-    app: myapp
+    app: redis-cluster
   ports:
   - name: client
     port: 6379
@@ -12,3 +12,4 @@ spec:
   - name: gossip
     port: 16379
     targetPort: 16379
+  clusterIP: None
